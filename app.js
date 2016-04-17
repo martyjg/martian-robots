@@ -42,51 +42,64 @@ function setRobot(command, serialNumber) {
 
   grid[initialRobotX][initialRobotY] = "ROBOT " + serialNumber;
 
-  nextMove(initialRobotX, initialRobotY, serialNumber, initialDirection, moveSequence);
+  var robot = {
+    number: serialNumber,
+    x: initialRobotX,
+    y: initialRobotY,
+    direction: initialDirection,
+    moveSequence: moveSequence,
+    moveSequenceIndex: -1
+  };
 
-  console.log(grid);
-  console.log("initialDirection", initialDirection); 
+  nextMove(robot);
 }
 
-function nextMove(xPos, yPos, serialNumber, direction, moveSequence) {
-  console.log("ROBOT " + serialNumber + " is at position " + xPos + yPos + " and is facing towards " + direction);
+function nextMove(robot) {
 
-  for (i = 0; i < moveSequence.length; i++) {
-    computeMove(xPos, yPos, serialNumber, direction, moveSequence[i]);
+  if (robot.moveSequenceIndex < robot.moveSequence.length) {
+
+    console.log("ROBOT " + robot.number + " is at position " + robot.x + robot.y + " and is facing towards " + robot.direction);
+    computeNextMove(robot);
+
+  } else {
+
+    return;
   }
 
 }
 
-function computeMove(xPos, yPos, serialNumber, direction, move) {
+function computeNextMove(robot) {
 
-  if (move === "F") {
+  robot.moveSequenceIndex++;
 
-    switch(direction) {
+  if (robot.moveSequence[robot.moveSequenceIndex] === "F") {
+
+    switch(robot.direction) {
       case "N":
-      yPos++;
-      checkForScent(grid[xPos][yPos]);
+      robot.y++;
+      // checkForScent(grid[xPos][yPos]);
       break;
       case "S":
-      yPos--
-      checkForScent(grid[xPos][yPos]);
+      robot.y--;
+      // checkForScent(grid[xPos][yPos]);
       break;
       case "E":
-      xPos++
-      checkForScent(grid[xPos][yPos]);
+      robot.x++;
+      // checkForScent(grid[xPos][yPos]);
       break;
       case "W":
-      xPos--
-      checkForScent(grid[xPos][yPos]);
+      robot.x--;
+      // checkForScent(grid[xPos][yPos]);
       break;
     }
 
-  } else if (move ==="R") {
-    nextMoveRight(direction);
+  } else if (robot.moveSequence[robot.moveSequenceIndex] === "R") {
+    nextMoveRight(robot);
   } else {
     nextMoveLeft();
   }
 
-  return (xPos, yPos, serialNumber, direction);
+  nextMove(robot);
 
 }
 
@@ -94,26 +107,30 @@ function checkForScent() {
   console.log()
 }
 
-function nextMoveForward() {
+// function computeNextMove(xPos, yPos, serialNumber, direction, moveSequence, moveSequenceIndex) {
 
-}
+//   console.log("ROBOT " + serialNumber + " is at position " + xPos + yPos + " and is facing towards " + direction);
 
-function nextMoveRight(direction) {
-  switch(direction) {
+// }
+
+function nextMoveRight(robot) {
+  console.log("this happens")
+  switch(robot.direction) {
     case "N":
-    direction = "E";
+    robot.direction = "E";
     break;
     case "S":
-    direction = "W";
+    robot.direction = "W";
     break;
     case "E":
-    direction = "S";
+    robot.direction = "S";
     break;
     case "W":
-    direction = "N";
+    robot.direction = "N";
     break;
   }
-  return direction;
+
+  nextMove(robot);
 
 }
 

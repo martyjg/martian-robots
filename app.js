@@ -56,13 +56,14 @@ function setRobot(command, serialNumber) {
 
 function nextMove(robot) {
 
-  if (robot.moveSequenceIndex < robot.moveSequence.length) {
+  if (robot.x > grid.length - 1 || robot.y > grid[0].length - 1) {
+    lostRobot(robot);
+  } else if (robot.moveSequenceIndex < robot.moveSequence.length - 1) {
 
-    console.log("ROBOT " + robot.number + " is at position " + robot.x + robot.y + " and is facing towards " + robot.direction);
+    console.log("ROBOT " + robot.number + " is at position " + robot.x + ", " + robot.y + " and is facing towards " + robot.direction);
     computeNextMove(robot);
 
   } else {
-
     return;
   }
 
@@ -93,13 +94,13 @@ function computeNextMove(robot) {
       break;
     }
 
+    nextMove(robot);
+
   } else if (robot.moveSequence[robot.moveSequenceIndex] === "R") {
     nextMoveRight(robot);
   } else {
-    nextMoveLeft();
+    nextMoveLeft(robot);
   }
-
-  nextMove(robot);
 
 }
 
@@ -114,7 +115,6 @@ function checkForScent() {
 // }
 
 function nextMoveRight(robot) {
-  console.log("this happens")
   switch(robot.direction) {
     case "N":
     robot.direction = "E";
@@ -134,11 +134,32 @@ function nextMoveRight(robot) {
 
 }
 
-function nextMoveLeft() {
+function nextMoveLeft(robot) {
+  switch(robot.direction) {
+    case "N":
+    robot.direction = "W";
+    break;
+    case "S":
+    robot.direction = "E";
+    break;
+    case "E":
+    robot.direction = "N";
+    break;
+    case "W":
+    robot.direction = "S";
+    break;
+  }
+
+  nextMove(robot);
 
 }
 
+function lostRobot(robot) {
+  console.log("LOST")
+  return grid[robot.x][robot.y] = "LOST";
+}
+
+console.log(initialInput);
 
 getGridSize(initialInput);
 
-console.log(initialInput);

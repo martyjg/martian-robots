@@ -56,49 +56,38 @@ function setRobot(command, serialNumber) {
 
 function nextMove(robot) {
 
+  robot.moveSequenceIndex++;
+
   if (robot.x > grid.length - 1 || robot.y > grid[0].length - 1) {
-
-    if (grid[robot.x][robot.y] === "LOST") {
-      computeNextMove(robot)
-    } else { 
-      lostRobot(robot); 
-    }
-
+    lostRobot(robot); 
   } else if (robot.moveSequenceIndex < robot.moveSequence.length - 1) {
-
     console.log("ROBOT " + robot.number + " is at position " + robot.x + ", " + robot.y + " and is facing towards " + robot.direction);
     computeNextMove(robot);
-
   } else {
     return;
   }
-
 }
 
 function computeNextMove(robot) {
 
-  robot.moveSequenceIndex++;
-
   if (robot.moveSequence[robot.moveSequenceIndex] === "F") {
-
-    if (grid[robot.x][robot.y] === "LOST") computeNextMove(robot);
 
     switch(robot.direction) {
       case "N":
       robot.y++;
-      // checkForScent(grid[xPos][yPos]);
+      checkForScent(robot);
       break;
       case "S":
       robot.y--;
-      // checkForScent(grid[xPos][yPos]);
+      checkForScent(robot);
       break;
       case "E":
       robot.x++;
-      // checkForScent(grid[xPos][yPos]);
+      checkForScent(robot);
       break;
       case "W":
       robot.x--;
-      // checkForScent(grid[xPos][yPos]);
+      checkForScent(robot);
       break;
     }
 
@@ -112,9 +101,7 @@ function computeNextMove(robot) {
 
 }
 
-function checkForScent() {
-  console.log()
-}
+
 
 // function computeNextMove(xPos, yPos, serialNumber, direction, moveSequence, moveSequenceIndex) {
 
@@ -167,10 +154,29 @@ function lostRobot(robot) {
   return grid[robot.x][robot.y] = "LOST";
 }
 
-// function skipMove(robot) {
-//   robot.moveSequenceIndex++
-//   computeNextMove(robot);
-// }
+function checkForScent(robot) {
+  if (grid[robot.x][robot.y] === "LOST") {
+
+
+    switch(robot.direction) {
+      case "N":
+      robot.y--;
+      break;
+      case "S":
+      robot.y++;
+      break;
+      case "E":
+      robot.x--;
+      break;
+      case "W":
+      robot.x++;
+      break;
+    }
+    console.log("SCENT DETECTED!!");
+    nextMove(robot);
+  }
+}
+
 
 console.log(initialInput);
 

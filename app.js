@@ -21,9 +21,30 @@ function buildGrid(width, height) {
       grid[i].push(" ");
     }
   }
-  
+
+  parseCommands();
+}
+
+function parseCommands() {
+
+  commandsListed = initialInput.split("\n");
+  for (i = 1; i < commandsListed.length; i++) {
+    setRobot(commandsListed[i], i);
+  }
+}
+
+function setRobot(command, serialNumber) {
+
+  var initialRobotX = parseInt(command.split(" ", 1)[0]);
+  var initialRobotY = parseInt(command.split(" ", 2)[1]);
+
+  grid[initialRobotX][initialRobotY] = "ROBOT " + serialNumber;
+
   console.log(grid);
 }
+
+
+
 
 getGridSize(initialInput);
 

@@ -1,38 +1,3 @@
-
-var initialInput = "5 3 \n1 1 E RFRFRFRF \n3 2 N FRRFLLFFRRFLL \n0 3 W LLFFFLFLFL";
-
-// var initialInput = prompt("Please enter the commands for your Martian Robots");
-
-var grid = [];
-
-function getGridSize(input) {
-
-  var gridWidth = parseInt(input.split(" ", 1)[0]);
-  var gridHeight = parseInt(input.split(" ", 2)[1]);
-
-  buildGrid(gridWidth, gridHeight);
-}
-
-function buildGrid(width, height) {
-
-  for (var i = 0; i <= width; i++) {
-    grid.push(new Array);
-    for (var j = 0; j <= height; j++) {
-      grid[i].push(" ");
-    }
-  }
-
-  parseCommands();
-}
-
-function parseCommands() {
-
-  commandsListed = initialInput.split("\n");
-  for (i = 1; i < commandsListed.length; i++) {
-    setRobot(commandsListed[i], i);
-  }
-}
-
 function setRobot(command, serialNumber) {
 
   var initialRobotX = parseInt(command.split(" ", 1)[0]);
@@ -75,79 +40,38 @@ function computeNextMove(robot) {
     switch(robot.direction) {
       case "N":
       robot.y++;
-      checkForScent(robot);
       break;
       case "S":
       robot.y--;
-      checkForScent(robot);
       break;
       case "E":
       robot.x++;
-      checkForScent(robot);
       break;
       case "W":
       robot.x--;
-      checkForScent(robot);
       break;
     }
 
+    checkForScent(robot);
     nextMove(robot);
 
   } else if (robot.moveSequence[robot.moveSequenceIndex] === "R") {
-    nextMoveRight(robot);
+    rotate(robot, "R");
   } else {
-    nextMoveLeft(robot);
+    rotate(robot, "L");
   }
 
 }
 
-
-
-// function computeNextMove(xPos, yPos, serialNumber, direction, moveSequence, moveSequenceIndex) {
-
-//   console.log("ROBOT " + serialNumber + " is at position " + xPos + yPos + " and is facing towards " + direction);
-
-// }
-
-function nextMoveRight(robot) {
-  switch(robot.direction) {
-    case "N":
-    robot.direction = "E";
-    break;
-    case "S":
-    robot.direction = "W";
-    break;
-    case "E":
-    robot.direction = "S";
-    break;
-    case "W":
-    robot.direction = "N";
-    break;
+function rotate(robot, direction) {
+  if (direction === "R") {
+    robot.direction = rotationMoves.right[robot.direction];
+  } else {
+    robot.direction = rotationMoves.left[robot.direction];
   }
-
   nextMove(robot);
-
 }
 
-function nextMoveLeft(robot) {
-  switch(robot.direction) {
-    case "N":
-    robot.direction = "W";
-    break;
-    case "S":
-    robot.direction = "E";
-    break;
-    case "E":
-    robot.direction = "N";
-    break;
-    case "W":
-    robot.direction = "S";
-    break;
-  }
-
-  nextMove(robot);
-
-}
 
 function lostRobot(robot) {
   console.log("LOST")
@@ -178,7 +102,8 @@ function checkForScent(robot) {
 }
 
 
-console.log(initialInput);
+console.log("COMMAND INPUTS:\n", initialInput);
 
+//run Martian Robots
 getGridSize(initialInput);
 

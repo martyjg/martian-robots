@@ -57,7 +57,13 @@ function setRobot(command, serialNumber) {
 function nextMove(robot) {
 
   if (robot.x > grid.length - 1 || robot.y > grid[0].length - 1) {
-    lostRobot(robot);
+
+    if (grid[robot.x][robot.y] === "LOST") {
+      computeNextMove(robot)
+    } else { 
+      lostRobot(robot); 
+    }
+
   } else if (robot.moveSequenceIndex < robot.moveSequence.length - 1) {
 
     console.log("ROBOT " + robot.number + " is at position " + robot.x + ", " + robot.y + " and is facing towards " + robot.direction);
@@ -74,6 +80,8 @@ function computeNextMove(robot) {
   robot.moveSequenceIndex++;
 
   if (robot.moveSequence[robot.moveSequenceIndex] === "F") {
+
+    if (grid[robot.x][robot.y] === "LOST") computeNextMove(robot);
 
     switch(robot.direction) {
       case "N":
@@ -158,6 +166,11 @@ function lostRobot(robot) {
   console.log("LOST")
   return grid[robot.x][robot.y] = "LOST";
 }
+
+// function skipMove(robot) {
+//   robot.moveSequenceIndex++
+//   computeNextMove(robot);
+// }
 
 console.log(initialInput);
 

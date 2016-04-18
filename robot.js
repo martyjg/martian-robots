@@ -24,7 +24,7 @@ function nextMove(robot) {
   if (robot.x > grid.length - 1 || robot.y > grid[0].length - 1) {
     lostRobot(robot); 
 
-  } else if (robot.moveSequenceIndex < robot.moveSequence.length - 1) {
+  } else if (robot.moveSequenceIndex < robot.moveSequence.length + 1) {
     console.log("ROBOT-" + robot.number + " is at position [" + robot.x + ", " + robot.y + "] and is facing towards " + robot.direction);
     computeNextMove(robot);
 

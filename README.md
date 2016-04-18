@@ -6,7 +6,7 @@ An app that runs in the browser and outputs to the browser's console.
 A sequence of commands are entered which relate to the position and movements of mars' robots. The first two digits from the inputted commands represent the size of the grid over which the robots can move. If a robot moves off the grid it is lost but leaves behind a scent which prevents the following robots from also being lost at that point. After the co ordinates, each line represents the initial position and sequence movement of a robot. 
 
 Running Martian Robots
-Open the index.html in the browser then access the browser's console ('cmd` + `alt` + `j`)  to view output.
+Open the index.html in the browser then access the browser's console (`cmd` + `alt` + `j`)  to view output.
 
 ### Sample input:
 ```

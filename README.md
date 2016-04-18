@@ -9,7 +9,7 @@ The output logs every movement of each robot, if they are lost and if they detec
 
 The code base is separated into three files. One for parsing the inputted commands, one for generating the grid and one for handling the robot logic. These files are linked to a markup allowing the app to be run in the browser.
 
-Running Martian Robots
+### Running Martian Robots
 Open the index.html in the browser then access the browser's console (`cmd` + `alt` + `j`)  to view output.
 
 ### Sample input:

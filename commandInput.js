@@ -5,7 +5,8 @@ var initialInput = "5 3 \n1 1 E RFRFRFRF \n3 2 N FRRFLLFFRRFLL \n0 3 W LLFFFLFLF
 var rotationMoves = {
   left  :  {'N':'W', 'W':'S', 'S':'E', 'E':'N'},
   right :  {'N':'E', 'E':'S', 'S':'W', 'W':'N'}
-}
+};
+
 
 function parseCommands() {
 
@@ -13,4 +14,4 @@ function parseCommands() {
   for (i = 1; i < commandsListed.length; i++) {
     setRobot(commandsListed[i], i);
   }
-}
+};
